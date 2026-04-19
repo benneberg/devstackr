@@ -1,16 +1,73 @@
-# DevTools Workspace v1.0
+# Devstackr
 
-A high-performance, personalized developer dashboard designed for modern engineers. This workspace provides a suite of tools for development, design, and utility tasks, all running client-side for maximum speed and privacy.
+A capability-driven, type-safe developer automation runtime with AI-assisted workflow orchestration and composable execution pipelines.
 
-## 🚀 Features
+Devstackr enables engineers to build, execute, and automate workflows by chaining modular tools through a deterministic capability system, enhanced by AI-driven intent decomposition.
 
-- **Modular Tool Registry**: 40+ specialized engineering tools across Security, Data, Design, and DevOps.
-- **AI-Powered Pipeline Engine**: Decomposes natural language intent into executable tool sequences using Gemini.
-- **Capability-Based Matching**: One-to-one mapping between atomic capabilities and canonical tools for deterministic planning.
-- **Smart DevToolbox**: Drag-and-drop widgets with state persistence via LocalStorage (Mock Firestore).
-- **Client-Side Security**: All data transformations run 100% in the browser.
-- **Tool Certification**: Automated scoring system for tool completeness and pipeline safety.
-- **Mobile-First Design**: Fully responsive layout built with Tailwind CSS.
+⸻
+
+Core Capabilities
+
+* Capability-Centric Tooling System
+    Tools are not matched by name, but by canonical atomic capabilities (e.g. jwt.decode, csv.parse), enabling deterministic orchestration.
+* Type-Safe Pipeline Engine
+    Execution flows are validated using strict input/output type constraints, forming a browser-native DAG execution model.
+* AI Intent Compiler (Gemini-powered)
+    Natural language requests are compiled into structured execution plans mapped to capabilities, not direct tool calls.
+* Certification & Trust Layer
+    Tools are analyzed for stability, completeness, and pipeline safety using a structured certification system.
+* Client-Side Execution Runtime
+    All transformations execute locally in the browser for speed, privacy, and portability.
+
+⸻
+
+System Architecture
+
+Devstackr is composed of three core layers:
+
+1. Tool Layer
+
+A registry of modular tools defined by:
+
+* input/output types
+* capabilities
+* execution logic
+
+2. Capability Layer
+
+A deterministic mapping system that resolves:
+
+required capabilities → valid tool candidates
+
+3. Execution Layer (Pipeline Engine)
+
+A runtime that:
+
+* validates type flow
+* executes sequential transformations
+* handles failure recovery and replanning
+
+4. AI Planning Layer
+
+Gemini-based planner that:
+
+* converts natural language → capability graph
+* delegates execution to deterministic engine
+
+⸻
+
+🛠️ Why this matters
+
+Most automation systems rely on:
+
+* fuzzy matching
+* prompt chaining
+* implicit tool selection
+
+Devstackr instead enforces:
+
+deterministic execution through typed capability resolution
+
 
 ## 🛠️ Project Structure
 

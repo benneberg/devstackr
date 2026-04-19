@@ -1,0 +1,7 @@
+{
+  "name": "DevTools Platform",
+  "description": "A comprehensive developer operating layer with high-value tools for debugging, data transformation, and workflow orchestration.",
+  "requestFramePermissions": [
+    "clipboard-read"
+  ]
+}

@@ -1,3 +1,14 @@
+/**
+ * Central Tool Registry
+ * 
+ * This file contains the metadata, capabilities, and execution logic for all tools
+ * available in the workspace.
+ * 
+ * Tool Architecture:
+ * - capabilities: Used by the CapabilityMatcher to map intent to tools.
+ * - pipeline: Defines I/O types for the Pipeline Engine.
+ * - run: The async execution logic for the tool (client-side).
+ */
 import { Tool, Workflow, Pipeline, DataType } from '../types';
 
 export const TOOLS: Tool[] = [

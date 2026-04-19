@@ -15,37 +15,33 @@ DevTools Workspace is a React-based Single Page Application (SPA) designed for h
 ---
 
 ## 🛠️ Tool System
+Each tool is defined in `/data/tools.ts` and must satisfy the `Tool` interface.
 
-The application features a centralized tool registry that allows for easy addition and management of developer utilities.
+### Capability System (`/src/services/capabilityService.ts`)
+We use a **Capability-Centric Architecture**. Instead of matching tools by name, the system matches them by canonical capabilities (e.g., `jwt.decode`).
+- **CapabilityRegistry**: Acts as the source of truth for all supported atomic actions.
+- **CapabilityMatcher**: Resolves a list of required capabilities into a set of executable tools.
 
-### Tool Definition (`/types.ts`)
-Each tool must conform to the `Tool` interface:
-- `id`: Unique identifier.
-- `name`: Display name.
-- `category`: Tool category (e.g., "Design", "Development").
-- `description`: Short summary.
-- `inputTypes`: Array of `DataType` supported as input.
-- `outputTypes`: Array of `DataType` produced as output.
-- `run`: (Optional) Async function that implements the tool's logic.
-- `isWidget`: Boolean indicating if the tool has a dashboard widget.
-
-### Adding a New Tool
-1. **Create Component**: Add your tool UI/logic in `src/components/tools/`.
-2. **Define Metadata**: Add the tool's metadata to `src/data/tools.ts`.
-3. **Implement `run`**: If the tool is intended for use in pipelines, implement the `run` function in its metadata.
-4. **Register Widget**: If `isWidget` is true, add the component to the `WIDGET_COMPONENTS` map in `src/components/toolbox/ToolboxPanel.tsx`.
+### Certification System (`/src/services/certificationService.ts`)
+The `CertificationSystem` evaluates tool metadata (`openSpecs`) to generate a quality score:
+- **Stability**: Alpha, Beta, or Stable.
+- **Reliability**: A weighted average of documentation completeness and test coverage.
+- **Pipeline Confidence**: Determines if a tool is safe to be suggested in an automated sequence.
 
 ---
 
 ## ⛓️ Pipeline Engine
 
-The Pipeline Engine allows users to chain multiple tools together to create automated workflows.
+### Intent Decomposition (AI Planner)
+The `PipelinePlanner` (`/src/services/pipelineService.ts`) utilizes the **Gemini 2.0 Flash** model to parse natural language requests.
+1. The planner maps the user's intent to a list of atomic **capabilities**.
+2. The `CapabilityMatcher` finds the best tools that provide those capabilities.
+3. The engine performs a **Type Validation** pass to ensure data flows correctly between steps.
 
-### How it Works
-1. **Context Management**: The `PipelineContext` tracks the output of each step and passes it as input to the next.
-2. **Type Validation**: Before execution, the engine validates that the output type of step *N* is compatible with the input type of step *N+1*.
-3. **Execution**: Steps are executed sequentially. If a step fails, the pipeline stops and reports the error.
-4. **Metrics**: The engine tracks the execution time of each step for performance monitoring.
+### Execution Flow
+1. **Context Initialization**: `PipelineContext` is created with the initial user input.
+2. **Sequential Run**: Each tool's `run()` function is invoked with the output of the previous step.
+3. **Error Recovery**: If a step fails, the planner can initiate a "Feedback Loop" to suggest fixes or alternative toolpaths.
 
 ### Key Files
 - `src/lib/pipelineService.ts`: Contains the core logic for running, validating, and auto-building pipelines.
